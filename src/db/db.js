@@ -23,6 +23,17 @@ class Db {
       throw error;
     }
   }
+  static async editProfile(model, profileId, profileData) {
+    try {
+      const filter = { _id: profileId };
+      const updatedProfile = await model.findOneAndUpdate(filter, profileData, {
+        new: true,
+      });
+      return updatedProfile;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default Db;

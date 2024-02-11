@@ -34,6 +34,25 @@ class ProfileData {
       return Response.responseNotFound(res);
     }
   }
+  static async editProfile(req, res) {
+    const profileId = req.params.id;
+    const profileData = { ...req.body };
+    const { name, bio } = req.body;
+    const updateProfile = { name, bio };
+    try {
+      const result = await validator.validateAsync(updateProfile);
+      if (!result.error) {
+        const profileToUpdate = await Db.editProfile(
+          Profile,
+          profileId,
+          profileData
+        );
+        return Response.responseOk(res, profileToUpdate);
+      }
+    } catch (error) {
+      return Response.responseServerError(res);
+    }
+  }
 }
 
 export default ProfileData;

@@ -9,6 +9,9 @@ router
   .post(profileController.addProfile)
   .get(profileController.allProfiles);
 
-router.route("/:id").get(profileController.getProfileById);
+router
+  .route("/:id")
+  .get(profileController.getProfileById)
+  .patch(profileController.editProfile);
 
 export default router;
