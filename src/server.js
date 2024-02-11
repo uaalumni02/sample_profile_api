@@ -10,13 +10,16 @@ const port = process.env.PORT || 3000;
 
 const router = express.Router();
 
+import profileRoutes from "./routes/profile";
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const DB_URL = process.env.MONGO_URL;
 
-mongoose.connect(DB_URL)
+mongoose
+  .connect(DB_URL)
   .then(() => {
     console.log("Connection Successful");
     app.listen(port, () => log("server is running"));
@@ -24,5 +27,7 @@ mongoose.connect(DB_URL)
   .catch((error) => {
     console.error("Unable to Connect to MongoDB:", error);
   });
+
+  router.use("/profile", profileRoutes);
 
 app.use("/api", router);
